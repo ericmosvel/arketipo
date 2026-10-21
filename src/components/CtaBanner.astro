@@ -1,0 +1,267 @@
+---
+import { defaultWhatsappUrl, site } from '../data/site';
+import Icon from './ui/Icon.astro';
+import SplitUnit from './ui/SplitUnit.astro';
+---
+
+<section class="cta" aria-labelledby="cta-title">
+	<div class="container">
+		<div class="cta__panel" data-reveal>
+			<div class="cta__content">
+				<p class="cta__eyebrow">
+					<Icon name="snowflake" size={14} />
+					Orçamento grátis
+				</p>
+				<h2 class="h2 cta__title" id="cta-title">
+					Pronto para ter o clima ideal em casa?
+				</h2>
+				<p class="cta__lead">
+					Conte o que você precisa e receba uma proposta clara, com equipamento,
+					instalação e garantia.
+				</p>
+
+				<div class="cta__actions">
+					<a
+						class="btn btn--light"
+						href={defaultWhatsappUrl}
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						<Icon name="whatsapp" size={18} />
+						Falar no WhatsApp
+					</a>
+					<a class="btn btn--ghost-light" href={site.phoneHref}>
+						<Icon name="phone" size={17} />
+						{site.phoneDisplay}
+					</a>
+				</div>
+
+				<p class="cta__note">Sem compromisso · Atendimento em até 2h úteis</p>
+			</div>
+
+			<div class="cta__art">
+				<span class="cta__ring cta__ring--one" aria-hidden="true"></span>
+				<span class="cta__ring cta__ring--two" aria-hidden="true"></span>
+				<span class="cta__ring cta__ring--three" aria-hidden="true"></span>
+				<SplitUnit variant="large" class="cta__unit" />
+				<div class="cta__badge">
+					<span class="cta__badge-icon">
+						<Icon name="badge-check" size={19} />
+					</span>
+					<div>
+						<strong>Instalação certificada</strong>
+						<span>Garantia de 12 meses</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.cta {
+		padding-block: 0 var(--section-y);
+	}
+
+	.cta__panel {
+		position: relative;
+		display: grid;
+		grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+		align-items: center;
+		gap: 32px;
+		overflow: hidden;
+		padding: clamp(32px, 5vw, 64px);
+		border-radius: 32px;
+		background:
+			radial-gradient(circle at 82% 20%, rgba(118, 82, 245, 0.5), transparent 38%),
+			radial-gradient(circle at 12% 92%, rgba(220, 203, 255, 0.12), transparent 42%),
+			linear-gradient(135deg, #171044 0%, #25196f 52%, #3f23a5 100%);
+		box-shadow: 0 32px 80px rgba(23, 16, 68, 0.24);
+	}
+
+	.cta__content {
+		position: relative;
+		z-index: 2;
+		max-width: 560px;
+	}
+
+	.cta__eyebrow {
+		display: inline-flex;
+		align-items: center;
+		gap: 7px;
+		padding: 6px 11px;
+		border: 1px solid rgba(220, 203, 255, 0.3);
+		border-radius: var(--radius-pill);
+		background: rgba(255, 255, 255, 0.08);
+		color: #e9e1ff;
+		font-size: 0.7rem;
+		font-weight: 700;
+		letter-spacing: 0.09em;
+		text-transform: uppercase;
+	}
+
+	.cta__title {
+		margin-top: 16px;
+		color: #fff;
+		text-wrap: balance;
+	}
+
+	.cta__lead {
+		max-width: 480px;
+		margin-top: 14px;
+		font-size: 0.98rem;
+		line-height: 1.6;
+		color: rgba(255, 255, 255, 0.72);
+	}
+
+	.cta__actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 12px;
+		margin-top: 26px;
+	}
+
+	.cta__note {
+		margin-top: 16px;
+		font-size: 0.74rem;
+		color: rgba(255, 255, 255, 0.52);
+	}
+
+	.cta__art {
+		position: relative;
+		display: grid;
+		place-items: center;
+		min-height: 300px;
+	}
+
+	.cta__unit {
+		position: relative;
+		z-index: 2;
+		width: min(100%, 330px);
+		transform: rotate(-4deg);
+	}
+
+	.cta__ring {
+		position: absolute;
+		border-radius: 50%;
+		border: 1px solid rgba(220, 203, 255, 0.18);
+	}
+
+	.cta__ring--one {
+		width: 260px;
+		height: 260px;
+	}
+
+	.cta__ring--two {
+		width: 360px;
+		height: 360px;
+		border-color: rgba(220, 203, 255, 0.12);
+	}
+
+	.cta__ring--three {
+		width: 460px;
+		height: 460px;
+		border-color: rgba(220, 203, 255, 0.07);
+	}
+
+	.cta__badge {
+		position: absolute;
+		right: 0;
+		bottom: 8px;
+		z-index: 3;
+		display: flex;
+		align-items: center;
+		gap: 9px;
+		padding: 10px 13px;
+		border: 1px solid rgba(255, 255, 255, 0.16);
+		border-radius: 13px;
+		background: rgba(23, 16, 68, 0.62);
+		backdrop-filter: blur(12px);
+		-webkit-backdrop-filter: blur(12px);
+	}
+
+	.cta__badge-icon {
+		display: grid;
+		place-items: center;
+		width: 34px;
+		height: 34px;
+		border-radius: 10px;
+		background: rgba(189, 245, 168, 0.14);
+		color: var(--success);
+	}
+
+	.cta__badge div {
+		display: flex;
+		flex-direction: column;
+		line-height: 1.25;
+	}
+
+	.cta__badge strong {
+		font-size: 0.76rem;
+		color: #fff;
+	}
+
+	.cta__badge span {
+		font-size: 0.64rem;
+		color: rgba(255, 255, 255, 0.58);
+	}
+
+	@media (max-width: 900px) {
+		.cta__panel {
+			grid-template-columns: 1fr;
+			padding: 32px 24px;
+		}
+
+		.cta__art {
+			min-height: 240px;
+		}
+
+		.cta__ring--three {
+			width: 380px;
+			height: 380px;
+		}
+
+		.cta__badge {
+			right: 4%;
+		}
+	}
+
+	@media (max-width: 520px) {
+		.cta__panel {
+			border-radius: 24px;
+		}
+
+		.cta__actions .btn {
+			width: 100%;
+		}
+
+		.cta__art {
+			min-height: 210px;
+		}
+
+		.cta__unit {
+			width: 240px;
+		}
+
+		.cta__ring--one {
+			width: 200px;
+			height: 200px;
+		}
+
+		.cta__ring--two {
+			width: 280px;
+			height: 280px;
+		}
+
+		.cta__ring--three {
+			width: 340px;
+			height: 340px;
+		}
+
+		.cta__badge {
+			right: 0;
+			bottom: 0;
+			padding: 8px 10px;
+		}
+	}
+</style>

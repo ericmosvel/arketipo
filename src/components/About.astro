@@ -1,0 +1,317 @@
+---
+import { Image } from 'astro:assets';
+import aboutImage from '../assets/images/about-living-room.jpg';
+import { aboutChecklist, site, stats } from '../data/site';
+import Icon from './ui/Icon.astro';
+---
+
+<section class="section about" id="sobre">
+	<div class="container about__inner">
+		<div class="about__content" data-reveal>
+			<p class="eyebrow">Por que a Arketipo</p>
+			<h2 class="h2">Mais que instalar, cuidar do seu conforto.</h2>
+			<p class="about__description">
+				Entendemos que cada casa tem uma rotina. Por isso, avaliamos o ambiente,
+				indicamos a capacidade certa e acompanhamos o equipamento depois da instalação.
+				Menos preocupação, mais conforto.
+			</p>
+
+			<ul class="about__checklist">
+				{aboutChecklist.map((item) => (
+					<li>
+						<span class="about__check">
+							<Icon name="check" size={13} stroke={2.4} />
+						</span>
+						{item}
+					</li>
+				))}
+			</ul>
+
+			<div class="about__actions">
+				<a class="btn btn--primary" href="#orcamento">
+					Fale com um especialista
+					<Icon name="arrow-up-right" size={17} />
+				</a>
+				<a class="about__phone" href={site.phoneHref}>
+					<Icon name="phone" size={17} />
+					<span>{site.phoneDisplay}</span>
+				</a>
+			</div>
+		</div>
+
+		<div class="about__media" data-reveal data-reveal-delay="1">
+			<div class="about__image-wrap">
+				<Image
+					src={aboutImage}
+					alt="Sala de estar integrada com ar-condicionado split instalado perto das janelas"
+					widths={[480, 720, 1000]}
+					sizes="(max-width: 900px) 100vw, 48vw"
+					loading="lazy"
+					class="about__image"
+				/>
+			</div>
+
+			<div class="about__stat">
+				<span class="about__stat-icon">
+					<Icon name="badge-check" size={22} />
+				</span>
+				<div>
+					<strong>{stats.installations} instalações</strong>
+					<span>realizadas com garantia</span>
+				</div>
+			</div>
+
+			<div class="about__floating">
+				<span class="about__floating-icon">
+					<Icon name="shield-check" size={18} />
+				</span>
+				<div>
+					<strong>{stats.warranty}</strong>
+					<span>de garantia no serviço</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.about {
+		background: var(--surface);
+		border-block: 1px solid var(--border);
+	}
+
+	.about__inner {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 0.95fr);
+		align-items: center;
+		gap: clamp(40px, 6vw, 80px);
+	}
+
+	.about__content {
+		max-width: 560px;
+	}
+
+	.about__content .h2 {
+		margin-top: 12px;
+	}
+
+	.about__description {
+		margin-top: 16px;
+		font-size: 0.98rem;
+		line-height: 1.65;
+		color: var(--muted);
+	}
+
+	.about__checklist {
+		display: flex;
+		flex-direction: column;
+		gap: 11px;
+		margin-top: 24px;
+	}
+
+	.about__checklist li {
+		display: flex;
+		align-items: flex-start;
+		gap: 10px;
+		font-size: 0.9rem;
+		line-height: 1.45;
+		color: var(--text);
+	}
+
+	.about__check {
+		display: grid;
+		place-items: center;
+		flex-shrink: 0;
+		width: 21px;
+		height: 21px;
+		margin-top: 1px;
+		border-radius: 50%;
+		background: #e9fbe1;
+		color: var(--success-ink);
+	}
+
+	.about__actions {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 20px;
+		margin-top: 30px;
+	}
+
+	.about__phone {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		min-height: 44px;
+		font-size: 0.87rem;
+		font-weight: 600;
+		color: var(--primary);
+	}
+
+	.about__phone:hover {
+		color: var(--secondary-deep);
+	}
+
+	.about__media {
+		position: relative;
+		padding: 0 0 26px 26px;
+	}
+
+	.about__media::before {
+		content: '';
+		position: absolute;
+		inset: 26px 26px 0 0;
+		border-radius: var(--radius-hero);
+		background: linear-gradient(145deg, var(--accent) 0%, #f3edff 100%);
+	}
+
+	.about__image-wrap {
+		position: relative;
+		overflow: hidden;
+		border-radius: var(--radius-hero);
+		box-shadow: 0 24px 60px rgba(33, 22, 111, 0.14);
+	}
+
+	.about__image {
+		width: 100%;
+		height: clamp(380px, 43vw, 520px);
+		object-fit: cover;
+		object-position: center;
+	}
+
+	.about__stat {
+		position: absolute;
+		left: 4px;
+		bottom: 52px;
+		display: flex;
+		align-items: center;
+		gap: 11px;
+		padding: 13px 16px;
+		border: 1px solid rgba(255, 255, 255, 0.8);
+		border-radius: 15px;
+		background: rgba(255, 255, 255, 0.94);
+		box-shadow: var(--shadow-lg);
+		backdrop-filter: blur(10px);
+		-webkit-backdrop-filter: blur(10px);
+	}
+
+	.about__stat-icon {
+		display: grid;
+		place-items: center;
+		width: 40px;
+		height: 40px;
+		border-radius: 12px;
+		background: var(--primary);
+		color: #fff;
+	}
+
+	.about__stat div {
+		display: flex;
+		flex-direction: column;
+		line-height: 1.25;
+	}
+
+	.about__stat strong {
+		font-size: 0.86rem;
+		font-weight: 700;
+		color: var(--primary);
+	}
+
+	.about__stat span {
+		font-size: 0.7rem;
+		color: var(--muted);
+	}
+
+	.about__floating {
+		position: absolute;
+		top: 14px;
+		right: 0;
+		display: flex;
+		align-items: center;
+		gap: 9px;
+		padding: 10px 13px;
+		border-radius: 13px;
+		background: var(--primary);
+		color: #fff;
+		box-shadow: 0 16px 32px rgba(33, 22, 111, 0.24);
+	}
+
+	.about__floating-icon {
+		display: grid;
+		place-items: center;
+		width: 32px;
+		height: 32px;
+		border-radius: 9px;
+		background: rgba(255, 255, 255, 0.12);
+		color: var(--success);
+	}
+
+	.about__floating div {
+		display: flex;
+		flex-direction: column;
+		line-height: 1.2;
+	}
+
+	.about__floating strong {
+		font-size: 0.82rem;
+	}
+
+	.about__floating span {
+		font-size: 0.66rem;
+		color: rgba(255, 255, 255, 0.64);
+	}
+
+	@media (max-width: 900px) {
+		.about__inner {
+			grid-template-columns: 1fr;
+		}
+
+		.about__content {
+			max-width: 640px;
+		}
+
+		.about__media {
+			max-width: 620px;
+			padding: 0 0 20px 20px;
+		}
+
+		.about__media::before {
+			inset: 20px 20px 0 0;
+		}
+
+		.about__image {
+			height: clamp(320px, 56vw, 460px);
+		}
+	}
+
+	@media (max-width: 520px) {
+		.about__actions {
+			gap: 14px;
+		}
+
+		.about__actions .btn {
+			width: 100%;
+		}
+
+		.about__stat {
+			left: 6px;
+			bottom: 34px;
+			padding: 10px 12px;
+		}
+
+		.about__stat-icon {
+			width: 34px;
+			height: 34px;
+		}
+
+		.about__floating {
+			top: 8px;
+			right: 0;
+			padding: 8px 10px;
+		}
+
+		.about__image {
+			height: 300px;
+		}
+	}
+</style>

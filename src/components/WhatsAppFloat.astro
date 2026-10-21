@@ -1,0 +1,75 @@
+---
+import { defaultWhatsappUrl } from '../data/site';
+import Icon from './ui/Icon.astro';
+---
+
+<a
+	class="whatsapp-float"
+	href={defaultWhatsappUrl}
+	target="_blank"
+	rel="noopener noreferrer"
+	aria-label="Falar com a Arketipo no WhatsApp"
+>
+	<Icon name="whatsapp" size={26} />
+	<span class="whatsapp-float__label" aria-hidden="true">Fale com a gente</span>
+</a>
+
+<style>
+	.whatsapp-float {
+		position: fixed;
+		right: 20px;
+		bottom: calc(20px + env(safe-area-inset-bottom));
+		z-index: 80;
+		display: grid;
+		place-items: center;
+		width: 56px;
+		height: 56px;
+		border-radius: 50%;
+		background: #25d366;
+		color: #fff;
+		box-shadow: 0 12px 28px rgba(18, 140, 74, 0.36);
+		transition:
+			transform 180ms var(--ease),
+			box-shadow 180ms var(--ease);
+	}
+
+	.whatsapp-float:hover {
+		transform: translateY(-2px) scale(1.03);
+		box-shadow: 0 16px 34px rgba(18, 140, 74, 0.44);
+	}
+
+	.whatsapp-float__label {
+		position: absolute;
+		right: calc(100% + 10px);
+		top: 50%;
+		padding: 7px 10px;
+		border-radius: 9px;
+		background: var(--primary);
+		color: #fff;
+		font-size: 0.72rem;
+		font-weight: 600;
+		white-space: nowrap;
+		transform: translateY(-50%);
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 160ms var(--ease);
+	}
+
+	.whatsapp-float:hover .whatsapp-float__label,
+	.whatsapp-float:focus-visible .whatsapp-float__label {
+		opacity: 1;
+	}
+
+	@media (max-width: 600px) {
+		.whatsapp-float {
+			right: 16px;
+			bottom: calc(16px + env(safe-area-inset-bottom));
+			width: 52px;
+			height: 52px;
+		}
+
+		.whatsapp-float__label {
+			display: none;
+		}
+	}
+</style>

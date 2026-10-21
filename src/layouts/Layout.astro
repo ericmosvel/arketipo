@@ -1,0 +1,165 @@
+---
+import '../styles/global.css'
+import '@fontsource-variable/dm-sans';
+import '../styles/global.css';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import WhatsAppFloat from '../components/WhatsAppFloat.astro';
+import { faqs, services, site } from '../data/site';
+
+interface Props {
+	title?: string;
+	description?: string;
+	image?: string;
+}
+
+const {
+	title = site.seo.title,
+	description = site.seo.description,
+	image = site.seo.ogImage,
+} = Astro.props;
+
+const siteUrl = Astro.site ?? new URL('https://arketipoclima.com.br');
+const canonical = new URL(Astro.url.pathname, siteUrl);
+const ogImage = new URL(image, siteUrl);
+const businessId = `${siteUrl.origin}/#business`;
+
+const structuredData = {
+	'@context': 'https://schema.org',
+	'@graph': [
+		{
+			'@type': 'HVACBusiness',
+			'@id': businessId,
+			name: site.legalName,
+			alternateName: 'Arketipo',
+			url: siteUrl.origin,
+			description,
+			telephone: site.phoneHref.replace('tel:', ''),
+			email: site.email,
+			image: ogImage.href,
+			logo: new URL('/favicon.svg', siteUrl).href,
+			priceRange: '$$',
+			address: {
+				'@type': 'PostalAddress',
+				streetAddress: site.address.street,
+				addressLocality: site.address.city,
+				addressRegion: site.address.state,
+				postalCode: site.address.zip,
+				addressCountry: 'BR',
+			},
+			areaServed: [
+				{ '@type': 'City', name: 'São Paulo' },
+				{ '@type': 'AdministrativeArea', name: 'Grande São Paulo' },
+			],
+			openingHoursSpecification: [
+				{
+					'@type': 'OpeningHoursSpecification',
+					dayOfWeek: [
+						'Monday',
+						'Tuesday',
+						'Wednesday',
+						'Thursday',
+						'Friday',
+						'Saturday',
+					],
+					opens: '08:00',
+					closes: '18:00',
+				},
+			],
+			sameAs: [site.instagram, site.facebook],
+			hasOfferCatalog: {
+				'@type': 'OfferCatalog',
+				name: 'Serviços de climatização',
+				itemListElement: services.map((service, index) => ({
+					'@type': 'Offer',
+					position: index + 1,
+					itemOffered: {
+						'@type': 'Service',
+						name: service.title,
+						description: service.description,
+						provider: { '@id': businessId },
+					},
+				})),
+			},
+		},
+		{
+			'@type': 'FAQPage',
+			'@id': `${siteUrl.origin}/#faq`,
+			mainEntity: faqs.map((faq) => ({
+				'@type': 'Question',
+				name: faq.question,
+				acceptedAnswer: {
+					'@type': 'Answer',
+					text: faq.answer,
+				},
+			})),
+		},
+	],
+};
+---
+
+<!doctype html>
+<html lang="pt-BR">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="theme-color" content="#21166F" />
+		<meta name="generator" content={Astro.generator} />
+
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<link rel="canonical" href={canonical} />
+
+		<meta property="og:type" content="website" />
+		<meta property="og:locale" content="pt_BR" />
+		<meta property="og:site_name" content={site.legalName} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonical} />
+		<meta property="og:image" content={ogImage} />
+		<meta property="og:image:alt" content="Sala de estar com ar-condicionado split instalado" />
+
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={ogImage} />
+
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" sizes="any" />
+		<link rel="apple-touch-icon" href="/favicon.svg" />
+
+		<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+		<script is:inline>document.documentElement.classList.add('js');</script>
+	</head>
+	<body>
+		<a class="skip-link" href="#main">Pular para o conteúdo</a>
+		<Header />
+		<main id="main">
+			<slot />
+		</main>
+		<Footer />
+		<WhatsAppFloat />
+
+		<script>
+			const revealItems = document.querySelectorAll('[data-reveal]');
+			const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+			if (!('IntersectionObserver' in window) || reducedMotion) {
+				revealItems.forEach((item) => item.classList.add('is-visible'));
+			} else {
+				const observer = new IntersectionObserver(
+					(entries) => {
+						entries.forEach((entry) => {
+							if (!entry.isIntersecting) return;
+							entry.target.classList.add('is-visible');
+							observer.unobserve(entry.target);
+						});
+					},
+					{ threshold: 0.12, rootMargin: '0px 0px -40px 0px' },
+				);
+
+				revealItems.forEach((item) => observer.observe(item));
+			}
+		</script>
+	</body>
+</html>

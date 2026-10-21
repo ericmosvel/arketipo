@@ -1,0 +1,180 @@
+---
+import { steps } from '../data/site';
+import Icon from './ui/Icon.astro';
+---
+
+<section class="section steps" id="como-funciona">
+	<div class="container">
+		<div class="steps__head" data-reveal>
+			<p class="eyebrow">Como funciona</p>
+			<h2 class="h2">Do primeiro contato ao conforto em 3 passos.</h2>
+			<p class="steps__lead">
+				Um processo simples, transparente e acompanhado por quem entende de climatização.
+			</p>
+		</div>
+
+		<ol class="steps__grid">
+			{steps.map((step, index) => (
+				<li class="step" data-reveal data-reveal-delay={String(index + 1)}>
+					<span class="step__number">{step.number}</span>
+					<span class="step__icon">
+						<Icon name={step.icon} size={24} />
+					</span>
+					<h3 class="h3">{step.title}</h3>
+					<p>{step.description}</p>
+				</li>
+			))}
+		</ol>
+
+		<div class="steps__cta" data-reveal>
+			<a class="text-link" href="#orcamento">
+				Começar pelo orçamento
+				<Icon name="arrow-right" size={17} />
+			</a>
+		</div>
+	</div>
+</section>
+
+<style>
+	.steps {
+		position: relative;
+		overflow: hidden;
+		background: var(--surface);
+		border-block: 1px solid var(--border);
+	}
+
+	.steps::before {
+		content: '';
+		position: absolute;
+		top: -120px;
+		left: 50%;
+		width: 780px;
+		height: 360px;
+		border-radius: 50%;
+		transform: translateX(-50%);
+		background: radial-gradient(circle, rgba(220, 203, 255, 0.36), transparent 66%);
+		pointer-events: none;
+	}
+
+	.steps .container {
+		position: relative;
+		z-index: 1;
+	}
+
+	.steps__head {
+		max-width: 700px;
+		margin-inline: auto;
+		text-align: center;
+	}
+
+	.steps__head .eyebrow {
+		justify-content: center;
+	}
+
+	.steps__head .h2 {
+		margin-top: 12px;
+		text-wrap: balance;
+	}
+
+	.steps__lead {
+		max-width: 540px;
+		margin: 14px auto 0;
+		font-size: 0.98rem;
+		line-height: 1.6;
+		color: var(--muted);
+	}
+
+	.steps__grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 20px;
+		margin-top: clamp(36px, 5vw, 56px);
+		counter-reset: step;
+	}
+
+	.step {
+		position: relative;
+		padding: 26px;
+		border: 1px solid var(--border);
+		border-radius: 20px;
+		background: linear-gradient(180deg, #ffffff 0%, #fbfaff 100%);
+	}
+
+	.step:not(:last-child)::after {
+		content: '';
+		position: absolute;
+		top: 56px;
+		right: -21px;
+		width: 20px;
+		border-top: 1px dashed var(--border-strong);
+	}
+
+	.step__number {
+		display: inline-block;
+		font-size: 0.78rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		color: var(--secondary);
+	}
+
+	.step__icon {
+		position: absolute;
+		top: 22px;
+		right: 22px;
+		display: grid;
+		place-items: center;
+		width: 48px;
+		height: 48px;
+		border-radius: 14px;
+		background: var(--accent-soft);
+		color: var(--secondary-deep);
+	}
+
+	.step h3 {
+		margin-top: 20px;
+		color: var(--primary);
+	}
+
+	.step p {
+		margin-top: 8px;
+		font-size: 0.88rem;
+		line-height: 1.55;
+		color: var(--muted);
+	}
+
+	.steps__cta {
+		display: flex;
+		justify-content: center;
+		margin-top: 32px;
+	}
+
+	@media (max-width: 900px) {
+		.steps__grid {
+			grid-template-columns: 1fr;
+			max-width: 560px;
+			margin-inline: auto;
+		}
+
+		.step:not(:last-child)::after {
+			top: auto;
+			right: 50%;
+			bottom: -21px;
+			width: 1px;
+			height: 20px;
+			border-top: 0;
+			border-left: 1px dashed var(--border-strong);
+		}
+	}
+
+	@media (max-width: 520px) {
+		.step {
+			padding: 22px;
+		}
+
+		.step__icon {
+			width: 42px;
+			height: 42px;
+			border-radius: 12px;
+		}
+	}
+</style>

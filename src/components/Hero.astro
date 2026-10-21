@@ -1,0 +1,308 @@
+---
+import { Image } from 'astro:assets';
+import heroImage from '../assets/images/hero-living-room.jpg';
+import Icon from './ui/Icon.astro';
+import QuoteForm from './QuoteForm';
+---
+
+<section class="hero" id="inicio">
+	<div class="hero__media" aria-hidden="true">
+		<Image
+			src={heroImage}
+			alt=""
+			widths={[800, 1200, 1800]}
+			sizes="100vw"
+			loading="eager"
+			fetchpriority="high"
+			class="hero__image"
+		/>
+		<span class="hero__veil"></span>
+	</div>
+
+	<div class="container hero__inner">
+		<div class="hero__content">
+			<p class="hero__eyebrow">
+				<Icon name="snowflake" size={15} />
+				Venda • Instalação • Manutenção
+			</p>
+
+			<h1 class="display hero__title">
+				Clima perfeito em casa,
+				<span class="hero__highlight">sem dor de cabeça.</span>
+			</h1>
+
+			<p class="hero__lead">
+				Splits inverter selecionados, instalação certificada e manutenção preventiva
+				para sua casa ficar confortável o ano inteiro.
+			</p>
+
+			<div class="hero__trust">
+				<div class="avatars" aria-hidden="true">
+					<span class="avatar avatar--one">MS</span>
+					<span class="avatar avatar--two">RM</span>
+					<span class="avatar avatar--three">CR</span>
+				</div>
+				<div class="hero__trust-copy">
+					<div class="hero__stars">
+						<span class="stars" aria-hidden="true">
+							<Icon name="star" size={14} />
+							<Icon name="star" size={14} />
+							<Icon name="star" size={14} />
+							<Icon name="star" size={14} />
+							<Icon name="star" size={14} />
+						</span>
+						<strong>4,9/5</strong>
+						<span>· +2.500 instalações</span>
+					</div>
+					<p>Atendimento em São Paulo capital e Grande SP</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="hero__form">
+			<QuoteForm client:load />
+		</div>
+	</div>
+
+	<span class="hero__glow hero__glow--one" aria-hidden="true"></span>
+	<span class="hero__glow hero__glow--two" aria-hidden="true"></span>
+</section>
+
+<style>
+	.hero {
+		position: relative;
+		overflow: hidden;
+		padding-block: clamp(58px, 8vw, 102px) clamp(42px, 5vw, 64px);
+		background: var(--primary-deep);
+	}
+
+	.hero__media {
+		position: absolute;
+		inset: 0;
+	}
+
+	.hero__image {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: center 58%;
+	}
+
+	.hero__veil {
+		position: absolute;
+		inset: 0;
+		background:
+			linear-gradient(
+				100deg,
+				rgba(17, 11, 50, 0.94) 0%,
+				rgba(23, 15, 70, 0.82) 38%,
+				rgba(23, 15, 70, 0.48) 70%,
+				rgba(23, 15, 70, 0.3) 100%
+			),
+			linear-gradient(0deg, rgba(17, 11, 50, 0.36) 0%, transparent 55%);
+	}
+
+	.hero__inner {
+		position: relative;
+		z-index: 2;
+	}
+
+	.hero__content {
+		max-width: 760px;
+	}
+
+	.hero__eyebrow {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		padding: 7px 13px;
+		border: 1px solid rgba(220, 203, 255, 0.35);
+		border-radius: var(--radius-pill);
+		background: rgba(255, 255, 255, 0.08);
+		color: #ece5ff;
+		font-size: 0.74rem;
+		font-weight: 600;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		backdrop-filter: blur(8px);
+		-webkit-backdrop-filter: blur(8px);
+	}
+
+	.hero__title {
+		max-width: 760px;
+		margin-top: 20px;
+		color: #fff;
+		text-wrap: balance;
+	}
+
+	.hero__highlight {
+		position: relative;
+		color: #e2d6ff;
+		white-space: nowrap;
+		background-image: linear-gradient(
+			transparent 64%,
+			rgba(118, 82, 245, 0.55) 64%,
+			rgba(118, 82, 245, 0.55) 88%,
+			transparent 88%
+		);
+		box-decoration-break: clone;
+		-webkit-box-decoration-break: clone;
+	}
+
+	.hero__lead {
+		max-width: 590px;
+		margin-top: 20px;
+		font-size: clamp(1rem, 1.4vw, 1.13rem);
+		line-height: 1.65;
+		color: rgba(255, 255, 255, 0.8);
+	}
+
+	.hero__trust {
+		display: flex;
+		align-items: center;
+		gap: 14px;
+		margin-top: 28px;
+	}
+
+	.avatars {
+		display: flex;
+		flex-shrink: 0;
+	}
+
+	.avatar {
+		display: grid;
+		place-items: center;
+		width: 38px;
+		height: 38px;
+		border: 2px solid rgba(255, 255, 255, 0.85);
+		border-radius: 50%;
+		font-size: 0.63rem;
+		font-weight: 700;
+		letter-spacing: 0.01em;
+		color: #fff;
+	}
+
+	.avatar + .avatar {
+		margin-left: -10px;
+	}
+
+	.avatar--one {
+		background: linear-gradient(135deg, #7652f5, #4f2bd8);
+	}
+
+	.avatar--two {
+		background: linear-gradient(135deg, #d47bb8, #8e3f83);
+	}
+
+	.avatar--three {
+		background: linear-gradient(135deg, #5e8bd8, #2f4f9e);
+	}
+
+	.hero__stars {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 6px;
+		font-size: 0.8rem;
+		color: rgba(255, 255, 255, 0.66);
+	}
+
+	.hero__stars strong {
+		color: #fff;
+		font-weight: 700;
+	}
+
+	.stars {
+		display: inline-flex;
+		gap: 2px;
+		color: #ffd479;
+	}
+
+	.hero__trust-copy p {
+		margin-top: 2px;
+		font-size: 0.76rem;
+		color: rgba(255, 255, 255, 0.62);
+	}
+
+	.hero__form {
+		margin-top: clamp(32px, 4vw, 46px);
+	}
+
+	.hero__glow {
+		position: absolute;
+		z-index: 1;
+		border-radius: 50%;
+		pointer-events: none;
+		filter: blur(10px);
+	}
+
+	.hero__glow--one {
+		width: 360px;
+		height: 360px;
+		right: 6%;
+		top: -160px;
+		background: radial-gradient(circle, rgba(118, 82, 245, 0.42), transparent 68%);
+	}
+
+	.hero__glow--two {
+		width: 420px;
+		height: 420px;
+		left: -220px;
+		bottom: -180px;
+		background: radial-gradient(circle, rgba(220, 203, 255, 0.16), transparent 70%);
+	}
+
+	@media (max-width: 760px) {
+		.hero {
+			padding-block: 46px 38px;
+		}
+
+		.hero__title {
+			margin-top: 16px;
+		}
+
+		.hero__highlight {
+			white-space: normal;
+		}
+
+		.hero__lead {
+			margin-top: 16px;
+		}
+
+		.hero__trust {
+			align-items: flex-start;
+			margin-top: 24px;
+		}
+
+		.hero__veil {
+			background:
+				linear-gradient(
+					180deg,
+					rgba(17, 11, 50, 0.9) 0%,
+					rgba(23, 15, 70, 0.82) 55%,
+					rgba(23, 15, 70, 0.75) 100%
+				),
+				linear-gradient(0deg, rgba(17, 11, 50, 0.5), transparent 60%);
+		}
+
+		.hero__image {
+			object-position: center;
+		}
+	}
+
+	@media (max-width: 460px) {
+		.hero__stars {
+			font-size: 0.74rem;
+		}
+
+		.hero__trust-copy p {
+			font-size: 0.7rem;
+		}
+
+		.avatar {
+			width: 34px;
+			height: 34px;
+			font-size: 0.58rem;
+		}
+	}
+</style>

@@ -1,0 +1,198 @@
+---
+import Icon from './ui/Icon.astro';
+import MobileNav from './MobileNav';
+import { defaultWhatsappUrl, nav, site } from '../data/site';
+---
+
+<header class="site-header">
+	<div class="container header__inner">
+		<a class="brand" href="#inicio" aria-label={`${site.legalName} — início`}>
+			<span class="brand__mark" aria-hidden="true">
+				<Icon name="snowflake" size={22} stroke={1.9} />
+			</span>
+			<span class="brand__text">
+				{site.brand}<span class="brand__suffix">{site.brandSuffix}</span>
+			</span>
+		</a>
+
+		<nav class="header__nav" aria-label="Navegação principal">
+			<ul>
+				{nav.map((item) => (
+					<li>
+						<a href={item.href}>{item.label}</a>
+					</li>
+				))}
+			</ul>
+		</nav>
+
+		<div class="header__actions">
+			<a class="header__phone" href={site.phoneHref}>
+				<Icon name="phone" size={16} />
+				<span>{site.phoneDisplay}</span>
+			</a>
+			<a
+				class="btn btn--primary btn--sm header__cta"
+				href={defaultWhatsappUrl}
+				target="_blank"
+				rel="noopener noreferrer"
+			>
+				Orçamento grátis
+			</a>
+			<MobileNav client:idle />
+		</div>
+	</div>
+</header>
+
+<style>
+	.site-header {
+		position: sticky;
+		top: 0;
+		z-index: 100;
+		height: var(--header-h);
+		display: flex;
+		align-items: center;
+		background: transparent;
+		border-bottom: 0;
+	}
+
+	/*
+	 * O blur fica no pseudo-elemento, e não no header: `backdrop-filter`
+	 * transforma o elemento em containing block de descendentes
+	 * `position: fixed`, o que zerava a altura do menu mobile.
+	 */
+	.site-header::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		z-index: -1;
+		background: rgba(248, 248, 255, 0.88);
+		border-bottom: 1px solid rgba(33, 22, 111, 0.06);
+		backdrop-filter: blur(16px);
+		-webkit-backdrop-filter: blur(16px);
+	}
+
+	.header__inner {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 24px;
+	}
+
+	.brand {
+		display: inline-flex;
+		align-items: center;
+		gap: 10px;
+		flex-shrink: 0;
+	}
+
+	.brand__mark {
+		display: grid;
+		place-items: center;
+		width: 42px;
+		height: 42px;
+		border-radius: 13px;
+		background: linear-gradient(145deg, var(--primary) 0%, var(--secondary) 100%);
+		color: #fff;
+		box-shadow: 0 8px 18px rgba(33, 22, 111, 0.22);
+	}
+
+	.brand__text {
+		font-size: 1.25rem;
+		font-weight: 700;
+		letter-spacing: -0.045em;
+		color: var(--primary);
+		line-height: 1;
+	}
+
+	.brand__suffix {
+		margin-left: 3px;
+		color: var(--secondary);
+		font-weight: 500;
+	}
+
+	.header__nav ul {
+		display: flex;
+		align-items: center;
+		gap: clamp(14px, 2vw, 28px);
+	}
+
+	.header__nav a {
+		position: relative;
+		display: inline-flex;
+		align-items: center;
+		min-height: 44px;
+		font-size: 0.88rem;
+		font-weight: 500;
+		color: var(--muted);
+		transition: color 160ms var(--ease);
+	}
+
+	.header__nav a::after {
+		content: '';
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 8px;
+		height: 2px;
+		border-radius: 2px;
+		background: var(--secondary);
+		transform: scaleX(0);
+		transform-origin: left;
+		transition: transform 180ms var(--ease);
+	}
+
+	.header__nav a:hover {
+		color: var(--primary);
+	}
+
+	.header__nav a:hover::after {
+		transform: scaleX(1);
+	}
+
+	.header__actions {
+		display: flex;
+		align-items: center;
+		gap: 14px;
+		flex-shrink: 0;
+	}
+
+	.header__phone {
+		display: inline-flex;
+		align-items: center;
+		gap: 7px;
+		min-height: 44px;
+		font-size: 0.84rem;
+		font-weight: 600;
+		color: var(--primary);
+		white-space: nowrap;
+	}
+
+	.header__phone:hover {
+		color: var(--secondary-deep);
+	}
+
+	@media (max-width: 1180px) {
+		.header__phone {
+			display: none;
+		}
+	}
+
+	@media (max-width: 1080px) {
+		.header__nav,
+		.header__cta {
+			display: none;
+		}
+	}
+
+	@media (max-width: 420px) {
+		.brand__mark {
+			width: 38px;
+			height: 38px;
+			border-radius: 12px;
+		}
+
+		.brand__text {
+			font-size: 1.14rem;
+		}
+	}
+</style>

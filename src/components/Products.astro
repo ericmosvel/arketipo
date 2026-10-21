@@ -1,0 +1,294 @@
+---
+import { products, whatsappUrl } from '../data/site';
+import Icon from './ui/Icon.astro';
+import SplitUnit from './ui/SplitUnit.astro';
+---
+
+<section class="section products" id="equipamentos">
+	<div class="container">
+		<div class="section-head" data-reveal>
+			<div class="section-head__copy">
+				<p class="eyebrow">Equipamentos</p>
+				<h2 class="h2">Um split ideal para cada ambiente.</h2>
+			</div>
+			<div class="section-head__action">
+				<a class="text-link" href="#orcamento">
+					Não sabe qual escolher? Fale com a gente
+					<Icon name="arrow-right" size={17} />
+				</a>
+			</div>
+		</div>
+
+		<div class="products__grid">
+			{products.map((product, index) => (
+				<article class="product-card" data-reveal data-reveal-delay={String(index + 1)}>
+					<div class="product-card__media">
+						<span class={`badge badge--${product.badgeTone}`}>{product.badge}</span>
+						<SplitUnit variant={product.variant} class="product-card__unit" />
+						<span class="product-card__flow" aria-hidden="true"></span>
+					</div>
+
+					<div class="product-card__body">
+						<div class="product-card__head">
+							<h3 class="h3">{product.name}</h3>
+							<p>{product.tagline}</p>
+						</div>
+
+						<dl class="product-card__specs">
+							<div>
+								<dt>Capacidade</dt>
+								<dd>{product.capacity}</dd>
+							</div>
+							<div>
+								<dt>Área indicada</dt>
+								<dd>{product.area}</dd>
+							</div>
+							<div>
+								<dt>Energia</dt>
+								<dd>{product.energy}</dd>
+							</div>
+						</dl>
+
+						<ul class="product-card__features">
+							{product.features.map((feature) => (
+								<li>
+									<Icon name="check" size={13} stroke={2.4} />
+									{feature}
+								</li>
+							))}
+						</ul>
+
+						<div class="product-card__footer">
+							<div class="product-card__price">
+								<span>a partir de</span>
+								<strong>{product.price}</strong>
+								<small>{product.installment}</small>
+							</div>
+							<a
+								class="btn btn--secondary btn--block"
+								href={whatsappUrl(product.message)}
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								Solicitar este modelo
+								<Icon name="arrow-up-right" size={16} />
+							</a>
+						</div>
+					</div>
+				</article>
+			))}
+		</div>
+
+		<p class="products__note">
+			*Valores ilustrativos, sujeitos a avaliação técnica e disponibilidade. O valor final
+			inclui equipamento e pode variar conforme a instalação.
+		</p>
+	</div>
+</section>
+
+<style>
+	.products {
+		position: relative;
+	}
+
+	.products__grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 20px;
+	}
+
+	.product-card {
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
+		background: var(--surface);
+		border: 1px solid var(--border);
+		border-radius: 20px;
+		box-shadow: var(--shadow-sm);
+		transition:
+			transform 220ms var(--ease),
+			box-shadow 220ms var(--ease),
+			border-color 220ms var(--ease);
+	}
+
+	.product-card:hover {
+		transform: translateY(-5px);
+		border-color: var(--border-strong);
+		box-shadow: var(--shadow-md);
+	}
+
+	.product-card__media {
+		position: relative;
+		display: grid;
+		place-items: center;
+		min-height: 224px;
+		padding: 32px 24px 20px;
+		overflow: hidden;
+		background:
+			radial-gradient(circle at 78% 18%, rgba(118, 82, 245, 0.16), transparent 38%),
+			linear-gradient(145deg, #f5f1ff 0%, #ece5ff 58%, #e3d9ff 100%);
+		border-bottom: 1px solid rgba(33, 22, 111, 0.06);
+	}
+
+	.product-card__media .badge {
+		position: absolute;
+		top: 16px;
+		left: 16px;
+		z-index: 2;
+		box-shadow: 0 4px 12px rgba(33, 22, 111, 0.08);
+	}
+
+	.product-card__unit {
+		position: relative;
+		z-index: 1;
+		transition: transform 300ms var(--ease);
+	}
+
+	.product-card:hover .product-card__unit {
+		transform: translateY(-4px);
+	}
+
+	.product-card__flow {
+		position: absolute;
+		right: -50px;
+		bottom: -80px;
+		width: 210px;
+		height: 210px;
+		border: 1px solid rgba(118, 82, 245, 0.18);
+		border-radius: 50%;
+	}
+
+	.product-card__flow::before,
+	.product-card__flow::after {
+		content: '';
+		position: absolute;
+		border: 1px solid rgba(118, 82, 245, 0.14);
+		border-radius: 50%;
+	}
+
+	.product-card__flow::before {
+		inset: 24px;
+	}
+
+	.product-card__flow::after {
+		inset: 48px;
+	}
+
+	.product-card__body {
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+		padding: 20px;
+	}
+
+	.product-card__head h3 {
+		color: var(--primary);
+	}
+
+	.product-card__head p {
+		margin-top: 4px;
+		font-size: 0.82rem;
+		color: var(--muted);
+	}
+
+	.product-card__specs {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 8px;
+		margin-top: 16px;
+		padding-block: 12px;
+		border-block: 1px solid var(--border);
+	}
+
+	.product-card__specs div {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		min-width: 0;
+	}
+
+	.product-card__specs dt {
+		font-size: 0.63rem;
+		font-weight: 600;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		color: var(--muted-light);
+	}
+
+	.product-card__specs dd {
+		margin: 0;
+		font-size: 0.78rem;
+		font-weight: 700;
+		color: var(--primary);
+		white-space: nowrap;
+	}
+
+	.product-card__features {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 6px 12px;
+		margin-top: 14px;
+	}
+
+	.product-card__features li {
+		display: inline-flex;
+		align-items: center;
+		gap: 5px;
+		font-size: 0.73rem;
+		color: var(--muted);
+	}
+
+	.product-card__features svg {
+		color: var(--success-ink);
+	}
+
+	.product-card__footer {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		margin-top: auto;
+		padding-top: 20px;
+	}
+
+	.product-card__price {
+		display: flex;
+		align-items: baseline;
+		flex-wrap: wrap;
+		gap: 4px 6px;
+		line-height: 1.2;
+	}
+
+	.product-card__price span {
+		font-size: 0.7rem;
+		color: var(--muted);
+	}
+
+	.product-card__price strong {
+		font-size: 1.4rem;
+		letter-spacing: -0.04em;
+		color: var(--primary);
+	}
+
+	.product-card__price small {
+		flex-basis: 100%;
+		font-size: 0.72rem;
+		color: var(--muted);
+	}
+
+	.products__note {
+		margin-top: 20px;
+		font-size: 0.72rem;
+		color: var(--muted-light);
+	}
+
+	@media (max-width: 980px) {
+		.products__grid {
+			grid-template-columns: 1fr;
+			max-width: 620px;
+		}
+
+		.product-card__media {
+			min-height: 250px;
+		}
+	}
+</style>

@@ -1,0 +1,40 @@
+---
+interface Props {
+	variant?: 'compact' | 'standard' | 'large';
+	class?: string;
+}
+
+const { variant = 'standard', class: className } = Astro.props;
+const widths = { compact: '220px', standard: '264px', large: '300px' };
+---
+
+<svg
+	class:list={['split-unit', className]}
+	viewBox="0 0 360 210"
+	role="img"
+	aria-label="Ilustração de um ar-condicionado split de parede"
+	style={`--unit-width: ${widths[variant]}`}
+>
+	<ellipse cx="180" cy="178" rx="122" ry="12" fill="#21166F" opacity="0.08" />
+	<path d="M55 74c0-18 14-32 32-32h186c18 0 32 14 32 32v22H55V74Z" fill="#FFFFFF" />
+	<path d="M55 96h250v18c0 15-12 27-27 27H82c-15 0-27-12-27-27V96Z" fill="#F7F5FF" />
+	<path d="M55 74c0-18 14-32 32-32h186c18 0 32 14 32 32v6H55v-6Z" fill="#FFFFFF" />
+	<rect x="78" y="87" width="204" height="9" rx="4.5" fill="#21166F" opacity="0.1" />
+	<rect x="78" y="113" width="204" height="6" rx="3" fill="#7652F5" opacity="0.2" />
+	<path d="M78 119h204" stroke="#D8D2EC" stroke-width="1.5" stroke-linecap="round" />
+	<circle cx="279" cy="72" r="3.5" fill="#7652F5" />
+	<path d="M100 76h42" stroke="#E8E4F5" stroke-width="2" stroke-linecap="round" />
+	<path d="M132 142c-12 8-12 20 0 28" stroke="#7652F5" stroke-width="2.4" stroke-linecap="round" opacity="0.5" />
+	<path d="M153 142c-12 8-12 20 0 28" stroke="#7652F5" stroke-width="2.4" stroke-linecap="round" opacity="0.35" />
+	<path d="M174 142c-12 8-12 20 0 28" stroke="#7652F5" stroke-width="2.4" stroke-linecap="round" opacity="0.2" />
+	<path d="M55 74c0-18 14-32 32-32h186c18 0 32 14 32 32" fill="none" stroke="#D8D2EC" stroke-width="1.5" />
+	<path d="M82 56h196" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" opacity="0.9" />
+</svg>
+
+<style>
+	.split-unit {
+		width: min(100%, var(--unit-width, 264px));
+		height: auto;
+		filter: drop-shadow(0 18px 24px rgba(33, 22, 111, 0.1));
+	}
+</style>
